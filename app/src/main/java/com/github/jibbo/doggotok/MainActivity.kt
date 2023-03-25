@@ -16,9 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Velocity
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.github.jibbo.doggotok.ui.theme.MyApplicationTheme
@@ -39,8 +43,17 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     MyApplicationTheme {
-                        DogList(dogViewModel.pictureFlow, { dogViewModel.randomDog() }) {
-                            DogImage(it)
+                        Box {
+                            DogList(dogViewModel.pictureFlow, { dogViewModel.randomDog() }) {
+                                DogImage(it)
+                            }
+                            Text(
+                                stringResource(R.string.app_name),
+                                color = Color.Gray,
+                                fontFamily = FontFamily.Monospace,
+                                fontSize = 24.sp,
+                                modifier = Modifier.padding(top = 24.dp)
+                            )
                         }
                     }
                 }
@@ -81,7 +94,7 @@ fun DogList(
 fun DogImage(imageUrl: Result<String>) {
     if (imageUrl.isFailure) {
         Text(
-            text = "Error While loading the image.",
+            text = "Error while loading the image.",
             color = Color.Gray,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
